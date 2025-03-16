@@ -15,5 +15,9 @@ typedef struct node {
 // Linked List Operation
 void createnode(mhsnode *head, int innilai, char *innama);
 void insertsortnamemhs(struct node **head, char *innama, int innilai);
+bool isempty(struct node * head);
+void listcpy(struct node *in, struct node **out);
+void removedupe(struct node** head);
+void killlist(struct node** head);
 
 #endif // !linklist_h
