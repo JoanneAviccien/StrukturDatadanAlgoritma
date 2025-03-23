@@ -47,7 +47,7 @@ void infront(linkedlist ** list, data in){
 }
 
 void inrear(linkedlist ** list, data in){
-  //Assigment
+  //Assignment
   linkedlist * newnode = createnode(in);
   linkedlist * yourlist = *list;
 
@@ -62,7 +62,6 @@ void inrear(linkedlist ** list, data in){
 
   newnode->chain = yourlist->chain;
   yourlist->chain = newnode;
-
 }
 
 void inbetween(linkedlist ** list, data in, int pos){
@@ -151,11 +150,17 @@ void rmbetween(linkedlist ** list, int pos){
 void printlist(linkedlist * list){
   if(isempty(list) == 1){
     perror("List tidak dapat di print (Ts pmo </3)");
+    return;
   }
   linkedlist * print = list;
   
   while(print != NULL){
-    printdata(print->isi);
+    printf("\n================================");
+    printf("\nNomor Antrian: %d", print->isi.noantri);
+    printf("\nNomor yang dipanggil: %s", print->isi.notelp);
+    printf("\nBiaya Panggilan: Rp.%d", print->isi.biaya);
+    printf("\nDurasi Panggilan: %d Menit", print->isi.biaya/500); 
+    printf("\n================================\n");
     print = print->chain;
   }
 }
@@ -171,7 +176,12 @@ void peeklist(linkedlist * list, int pos){
     print = print->chain;
     --pos;
   }
-  printdata(print->isi);
+  printf("\n================================");
+  printf("\nNomor Antrian: %d", print->isi.noantri);
+  printf("\nNomor yang dipanggil: %s", print->isi.notelp);
+  printf("\nBiaya Panggilan: Rp.%d", print->isi.biaya);
+  printf("\nDurasi Panggilan: %d Menit", print->isi.biaya/500); 
+  printf("\n================================\n");
 }
 
 #endif 

@@ -1,14 +1,16 @@
 #ifndef data_h
 #define data_h
 
+#include <stdio.h>
+#include <string.h>
+
 typedef struct telepon{
   int noantri;
-  char *notelp;
+  char notelp[13];
+  int biaya;
 } data;
 
-// Display
-void printdata(data print);
 // Setter
-void setdata(int noantri, char *notelp, int durasi, data * out);
+void setdata(int noantri, char * notelp, int durasi, data * out);
 
 #endif // !kamus_h

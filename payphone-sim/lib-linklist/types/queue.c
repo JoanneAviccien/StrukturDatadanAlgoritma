@@ -8,7 +8,7 @@ void enqueue(linkedlist ** queue, data in){
   inrear(queue, in);
 }
 
-void dequeue(linkedlist ** queue, data in){
+void dequeue(linkedlist ** queue){
   rmfront(queue);
 }
 

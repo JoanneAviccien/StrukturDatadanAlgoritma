@@ -9,6 +9,10 @@
 #include <stdbool.h>
 
 bool isnumvalid(char *notelp);
-void menu(int noantri, linkedlist ** antrian, linkedlist ** kontak);
+void usebooth(int * noantri, linkedlist ** antrian);
+void printkontak(linkedlist * list);
+void contact(int noantri, linkedlist ** kontak);
+void cekantrian(int noantri, linkedlist * antrian);
+void dialall(linkedlist ** antrian, linkedlist ** dialer);
 
 #endif // !telepon_h

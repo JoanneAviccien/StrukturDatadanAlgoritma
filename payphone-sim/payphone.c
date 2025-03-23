@@ -1,7 +1,10 @@
 #ifndef payphone_h
 #define payphone_h
 
+#include "data.h"
 #include "lib-linklist/linkedlist.h"
+#include "lib-linklist/types/queue.h"
+#include "lib-linklist/types/stack.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -15,33 +18,102 @@ bool isnumvalid(char *notelp){
   }
 }
 
-void usebooth(int noantri, linkedlist ** antrian){
-  printf("pler berdebu");
+void usebooth(int * noantri, linkedlist ** antrian){
+  data phonecall;
+  char newnum[13];
+  int min = 0;
+  printf("Nomor telepon yang akan dipanggil: ");
+  if (fgets(newnum, 13, stdin) != NULL) {
+    newnum[strcspn(newnum, "\n")] = 0;
+    printf("Durasi Panggilan: ");
+    scanf("%d", &min);
+    setdata(*noantri, newnum, min, &phonecall);
+    enqueue(antrian, phonecall);
+    ++*noantri; 
+  }
+}
+
+void printkontak(linkedlist * list){
+  if(isempty(list) == 1){
+    printf("Buku kontak masih kosong!\n");
+    return;
+  }
+  linkedlist * print = list;
+  int i = 1;
+  
+  while(print != NULL){
+    printf("%d. %s\n", i, print->isi.notelp);
+    print = print->chain;
+    i++;
+  }
 }
 
 void contact(int noantri, linkedlist ** kontak){
-  printf("pler basah");
+  data newcontact;
+  char newnum[13];
+  int choice;
+  int pos;
+  
+  printf("\n=== BUKU KONTAK ===\n");
+  printf("1. Tambah Kontak\n");
+  printf("2. Lihat Kontak\n");
+  printf("3. Kembali\n");
+  printf("Pilihan: ");
+  scanf("%d", &choice);
+  getchar(); // Membersihkan buffer
+
+  if(choice == 1) {
+    printf("Masukkan nomor telepon: ");
+    if (fgets(newnum, 13, stdin) != NULL) {
+      newnum[strcspn(newnum, "\n")] = 0;
+      if(!isnumvalid(newnum)) {
+        setdata(noantri, newnum, 0, &newcontact); // Durasi 0 karena ini hanya kontak
+        infront(kontak, newcontact); // Menambahkan ke depan list
+        printf("Kontak berhasil ditambahkan!\n");
+      }
+    }
+  }
+  else if(choice == 2) {
+    if(isempty(*kontak)) {
+      printf("Buku kontak masih kosong!\n");
+    } else {
+      printf("\n=== DAFTAR KONTAK ===\n");
+      printkontak(*kontak);
+    }
+  }
+  else if(choice == 3) {
+    return;
+  }
+  else {
+    printf("Pilihan tidak valid!\n");
+  }
 }
 
-void menu(int noantri, linkedlist ** phonelist, linkedlist ** kontak){
-  int choice = 0;
-  printf("\r\n\r\n\u2588\u2588\u2588\u2588\u2588\u2588\u2557  \u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2557   \u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2557  \u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2557   \u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557     \r\n\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u255A\u2588\u2588\u2557 \u2588\u2588\u2554\u255D\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2557  \u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2550\u2550\u255D     \r\n\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255D\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551 \u255A\u2588\u2588\u2588\u2588\u2554\u255D \u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255D\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2551   \u2588\u2588\u2551\u2588\u2588\u2554\u2588\u2588\u2557 \u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2557       \r\n\u2588\u2588\u2554\u2550\u2550\u2550\u255D \u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2551  \u255A\u2588\u2588\u2554\u255D  \u2588\u2588\u2554\u2550\u2550\u2550\u255D \u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2551\u2588\u2588\u2551   \u2588\u2588\u2551\u2588\u2588\u2551\u255A\u2588\u2588\u2557\u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u255D       \r\n\u2588\u2588\u2551     \u2588\u2588\u2551  \u2588\u2588\u2551   \u2588\u2588\u2551   \u2588\u2588\u2551     \u2588\u2588\u2551  \u2588\u2588\u2551\u255A\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255D\u2588\u2588\u2551 \u255A\u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557     \r\n\u255A\u2550\u255D     \u255A\u2550\u255D  \u255A\u2550\u255D   \u255A\u2550\u255D   \u255A\u2550\u255D     \u255A\u2550\u255D  \u255A\u2550\u255D \u255A\u2550\u2550\u2550\u2550\u2550\u255D \u255A\u2550\u255D  \u255A\u2550\u2550\u2550\u255D\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D     \r\n                                                                         \r\n\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2557\u2588\u2588\u2588\u2557   \u2588\u2588\u2588\u2557\u2588\u2588\u2557   \u2588\u2588\u2557\u2588\u2588\u2557      \u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2588\u2557 \r\n\u2588\u2588\u2554\u2550\u2550\u2550\u2550\u255D\u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2551   \u2588\u2588\u2551\u2588\u2588\u2551     \u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u255A\u2550\u2550\u2588\u2588\u2554\u2550\u2550\u255D\u2588\u2588\u2554\u2550\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\r\n\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2551\u2588\u2588\u2554\u2588\u2588\u2588\u2588\u2554\u2588\u2588\u2551\u2588\u2588\u2551   \u2588\u2588\u2551\u2588\u2588\u2551     \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551   \u2588\u2588\u2551   \u2588\u2588\u2551   \u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255D\r\n\u255A\u2550\u2550\u2550\u2550\u2588\u2588\u2551\u2588\u2588\u2551\u2588\u2588\u2551\u255A\u2588\u2588\u2554\u255D\u2588\u2588\u2551\u2588\u2588\u2551   \u2588\u2588\u2551\u2588\u2588\u2551     \u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2551   \u2588\u2588\u2551   \u2588\u2588\u2551   \u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\r\n\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2551\u2588\u2588\u2551 \u255A\u2550\u255D \u2588\u2588\u2551\u255A\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255D\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2551  \u2588\u2588\u2551   \u2588\u2588\u2551   \u255A\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255D\u2588\u2588\u2551  \u2588\u2588\u2551\r\n\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D\u255A\u2550\u255D\u255A\u2550\u255D     \u255A\u2550\u255D \u255A\u2550\u2550\u2550\u2550\u2550\u255D \u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D\u255A\u2550\u255D  \u255A\u2550\u255D   \u255A\u2550\u255D    \u255A\u2550\u2550\u2550\u2550\u2550\u255D \u255A\u2550\u255D  \u255A\u2550\u255D\r\n                                                                         \r\n\r\n");
-  printf("\n\t1. Gunakan Booth Telepon\n\t2. Buka Buku Kontak\n\t3. Keluar\n\nInput anda: ");
-  void (*menu[2])(int, linkedlist **) = {usebooth, contact};
-  scanf("%d", &choice);
-  if (choice == 1){
-    menu[choice - 1](noantri, phonelist);
+void cekantrian(int noantri, linkedlist * antrian){
+  printf("\nAntrian Booth Telepon:\n");
+  printlist(antrian);
+}
+
+void dialall(linkedlist ** antrian, linkedlist ** dialer){
+  if(isempty(*antrian)) {
+    printf("Antrian masih kosong!\n");
+    return;
   }
-  else if(choice == 2){
-    menu[choice - 1](noantri, kontak);
+
+  printf("\n=== MEMULAI DIAL SEMUA ANTRIAN ===\n");
+  linkedlist * temp = *antrian;
+  linkedlist * temp2 = *dialer;
+  
+  while(temp != NULL) {
+    printf("\nMemanggil nomor: %s\n", temp->isi.notelp);
+    push(dialer, temp->isi);
+    temp = temp->chain;
+    printf("Nomor berhasil dipanggil!\n");
+    pop(dialer);
+    dequeue(antrian);
   }
-  else if (choice == 3) {
-    exit(0);
-  }
-  else{
-    perror("No shit, sherlock. The option is not exist...");
-    exit(1);
-  }
+
+  printf("\nSemua nomor telah dipanggil!\n");
 }
 
 #endif /* ifndef MACRO */
