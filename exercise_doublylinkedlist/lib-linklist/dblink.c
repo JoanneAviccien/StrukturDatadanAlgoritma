@@ -74,7 +74,6 @@ void dinbetween(twolink **list, data stream, int pos) {
   if (pos == 1) {
     newbetween->next = *list;
     (*list)->prev = newbetween;
-    *list = newbetween;
     return;
   }
 
@@ -84,13 +83,6 @@ void dinbetween(twolink **list, data stream, int pos) {
       yourlist = yourlist->next;
       --pos;
     }
-
-    newbetween->next = yourlist->next;
-    newbetween->prev = yourlist;
-    if (yourlist->next != NULL) {
-      yourlist->next->prev = newbetween;
-    }
-    yourlist->next = newbetween;
   }
 }
 
