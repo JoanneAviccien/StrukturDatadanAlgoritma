@@ -16,4 +16,7 @@ void printdata(data stream);
 void getstring(char *stream);
 
 void makesched(data *stream);
+
+void getbandara(char *stream);
+
 #endif // !type_h

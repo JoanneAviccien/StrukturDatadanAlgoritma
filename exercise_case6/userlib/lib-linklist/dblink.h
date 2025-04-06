@@ -1,7 +1,7 @@
 #ifndef dblink_h
 #define dblink_h
 
-#include "../type.h"
+#include "../../lib-government/type.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>

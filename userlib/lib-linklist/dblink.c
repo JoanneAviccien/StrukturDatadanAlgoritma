@@ -1,6 +1,7 @@
 #ifndef dblink_h
 #define dblink_h
 
+#include "dblink.h"
 #include "../type.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -11,6 +12,9 @@ typedef struct dnode {
   struct dnode *next;
   data isi;
 } twolink;
+
+void end() { printf("Operasi Berhasil Dilakukan"); }
+void badend() { printf("Operasi Gagal ts pmo"); }
 
 bool isempty(twolink *list) {
   if (list != NULL) {
@@ -38,7 +42,7 @@ void dinfront(twolink **list, data stream) {
 
   if (isempty(yourlist) == 1) {
     *list = newfront;
-    return;
+    return end();
   }
 
   newfront->next = yourlist;
@@ -51,7 +55,7 @@ void dinrear(twolink **list, data stream) {
 
   if (isempty(yourlist) == 1) {
     *list = newrear;
-    return;
+    return end();
   }
 
   while (yourlist->next != NULL) {
@@ -68,14 +72,14 @@ void dinbetween(twolink **list, data stream, int pos) {
 
   if (isempty(yourlist) == 1) {
     perror("\nList tidak boleh kosong!");
-    exit(1);
+    return badend();
   }
 
   if (pos == 1) {
     newbetween->next = *list;
     (*list)->prev = newbetween;
     *list = newbetween;
-    return;
+    return end();
   }
 
   else {
@@ -94,15 +98,76 @@ void dinbetween(twolink **list, data stream, int pos) {
   }
 }
 
-void travel(twolink *list, char gear) {
+void drmfront(twolink **list) {
+  if (isempty(*list) == 1) {
+    perror("\nTidak ada yang dapat dihapus!");
+    return badend();
+  }
+  twolink *temp = *list;
+  *list = (*list)->next;
+  free(temp);
+  return end();
+}
+
+void drmrear(twolink **list) {
+  if (isempty(*list) == 1) {
+    perror("\nTidak ada yang dapat dihapus!");
+    return badend();
+  }
+  if ((*list)->next == NULL) {
+    free(*list);
+    return end();
+  }
+  twolink *temp = *list;
+  while (temp->next != NULL) {
+    temp = temp->next;
+  }
+  temp->prev->next = NULL;
+  free(temp);
+  return end();
+}
+
+void drmbetween(twolink **list, int pos) {
+  twolink *removed = *list;
+  twolink *connect = NULL;
+  if (isempty(*list) == 1) {
+    perror("\nTidak ada yang dapat dihapus!");
+    return badend();
+  }
+  if (pos == 1) {
+    drmfront(list);
+    return end();
+  } else {
+    --pos;
+    while (pos != 1 && removed->next != NULL) {
+      removed = removed->next;
+      --pos;
+    }
+    if (removed->next != NULL) {
+      connect = removed->prev;
+      connect->next = removed->next;
+      removed->next->prev = connect;
+      return end();
+    } else {
+      return badend();
+    }
+  }
+}
+
+void travel(twolink *list, char gear, void (*func)(data)) {
+  twolink *yourlist = list;
   switch (gear) {
   case 'd':
+    func(yourlist->isi);
+    travel(yourlist->next, gear, func);
     break;
   case 'r':
+    func(yourlist->isi);
+    travel(yourlist->prev, gear, func);
     break;
   default:
     perror("\nInvalid traverse type!");
-    exit(1);
+    return badend();
     break;
   }
 }

@@ -12,6 +12,9 @@ typedef struct dnode {
   data isi;
 } twolink;
 
+void end();
+void badend();
+
 // Validator
 bool isempty(twolink *list);
 
@@ -23,7 +26,11 @@ void dinfront(twolink **list, data stream);
 void dinrear(twolink **list, data stream);
 void dinbetween(twolink **list, data stream, int pos);
 
-void travel(twolink *list, char gear);
+void drmfront(twolink **list);
+void drmrear(twolink **list);
+void drmbetween(twolink **list, int pos);
+
+void travel(twolink *list, char gear, void (*func)(data));
 void dlistcpy(twolink *source, twolink **stream);
 
 #endif

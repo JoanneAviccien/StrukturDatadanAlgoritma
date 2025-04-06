@@ -2,7 +2,7 @@
 #define dblink_h
 
 #include "dblink.h"
-#include "../type.h"
+#include "../../lib-government/type.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>

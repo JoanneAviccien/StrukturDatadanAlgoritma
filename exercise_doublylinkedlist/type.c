@@ -1,6 +1,7 @@
 #ifndef type_h
 #define type_h
 
+#include "type.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -48,4 +49,5 @@ void makesched(data *stream) {
   getstring(info);
   setflight(place, kode, jam, info, stream);
 }
+
 #endif /* ifndef type_h */

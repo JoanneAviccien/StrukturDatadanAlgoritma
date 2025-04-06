@@ -1,9 +1,10 @@
+#include "lib-linklist/dblink.h"
 #include "type.h"
+#include <stdio.h>
 
 int main() {
-  data jadwal;
-  makesched(&jadwal);
-  printdata(jadwal);
+  data newsched;
+  twolink *databandara = NULL;
 
   return 0;
 }
