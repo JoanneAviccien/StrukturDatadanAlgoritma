@@ -1,16 +1,15 @@
 #ifndef sensus_h
 #define sensus_h
 
-#include "../userlib/lib-linklist/dblink.h"
+#include "../lib-linklist/dblink.h"
 #include "type.h"
 #include <stdio.h>
 #include <string.h>
 
-void buatdata(twolink **kota);
-void buatkota(twolink **kota);
-void hapusdata(twolink **kota);
+void buatdata(twolink **provinsi);
+void buatkota(twolink **provinsi);
 void showkota(twolink *provinsi);
-void hapuskan(twolink **kota);
+void hapuskota(twolink **provinsi);
 void demolish(twolink **provinsi);
 void showsensus(twolink *datasensus);
 
