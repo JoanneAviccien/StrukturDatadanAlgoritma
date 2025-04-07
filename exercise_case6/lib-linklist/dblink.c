@@ -56,16 +56,17 @@ void dinrear(twolink **list, data stream) {
 }
 
 void drmrear(twolink **list) {
+  twolink * temp = *list;
   if (isemptydb(*list) == 1) {
     perror("\nTidak ada yang dapat dihapus!");
     return badend();
   }
-  if ((*list)->prev == NULL) {
+  if (temp->prev == NULL) {
     free(*list);
     return end();
   }
-  twolink *temp = *list;
-  while (temp->prev != NULL) {
+
+  while (temp->prev->prev != NULL) {
     temp = temp->prev;
   }
   free(temp->prev);
