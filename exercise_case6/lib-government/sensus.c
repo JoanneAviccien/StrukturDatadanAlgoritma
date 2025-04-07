@@ -19,6 +19,7 @@ void buatdata(twolink **kota) {
   printf("Masukan Isi baru: ");
   getstring(namabaru);
   setdata(namabaru, &databaru);
+  dinrear(kota, databaru);
 }
 
 void buatkota(twolink **kota) {
@@ -27,6 +28,19 @@ void buatkota(twolink **kota) {
   printf("Masukan namakota: ");
   getstring(namabaru);
   setdata(namabaru, &databaru);
+
+  twolink *newkota = (twolink *)malloc(sizeof(twolink));
+  twolink *scroll = *kota;
+  newkota->isi = databaru;
+  newkota->next = NULL;
+  newkota->prev = NULL;
+  if (*kota != NULL) {
+    while (scroll->prev != NULL) {
+      scroll = scroll->prev;
+    }
+    scroll->prev = newkota;
+    return end();
+  }
 }
 
 void hapuskan(twolink **kota) {
@@ -38,11 +52,13 @@ void hapuskan(twolink **kota) {
   }
 }
 
+void printdata(data stream) { printf("%s\t", stream.isi); }
+
 void hapusdata(twolink **kota) {}
 
 void demolish(twolink **provinsi) {}
 
-void showkota(twolink *provinsi) {}
+void showkota(twolink *provinsi) { travel(provinsi, 'r', printdata); }
 
 void showsensus(twolink *datasensus) {}
 

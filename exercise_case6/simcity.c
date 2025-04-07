@@ -15,36 +15,36 @@ menu:
   getchar();
   if (pilihan == 1) {
     showkota(provinsi);
-    printf("\nMasukan kota yang akan diolah: ");
-    scanf("%d", &kota);
-    getchar();
+    //   printf("\nMasukan kota yang akan diolah: ");
+    //   scanf("%d", &kota);
+    // getchar();
 
     buatkota(&provinsi);
     goto menu;
   }
   if (pilihan == 2) {
     showkota(provinsi);
-    printf("\nMasukan kota yang akan diolah: ");
-    scanf("%d", &kota);
-    getchar();
+    //    printf("\nMasukan kota yang akan diolah: ");
+    //    scanf("%d", &kota);
+    // getchar();
 
     buatdata(&provinsi);
     goto menu;
   }
   if (pilihan == 3) {
     showkota(provinsi);
-    printf("\nMasukan kota yang akan diolah: ");
-    scanf("%d", &kota);
-    getchar();
+    //    printf("\nMasukan kota yang akan diolah: ");
+    //    scanf("%d", &kota);
+    // getchar();
 
     showsensus(provinsi);
     goto menu;
   }
   if (pilihan == 4) {
     showkota(provinsi);
-    printf("\nMasukan kota yang akan diolah: ");
-    scanf("%d", &kota);
-    getchar();
+    //    printf("\nMasukan kota yang akan diolah: ");
+    //    scanf("%d", &kota);
+    // getchar();
 
     hapusdata(&provinsi);
     goto menu;
