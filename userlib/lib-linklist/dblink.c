@@ -172,6 +172,4 @@ void travel(twolink *list, char gear, void (*func)(data)) {
   }
 }
 
-void dlistcpy(twolink *source, twolink **stream) {}
-
 #endif

@@ -7,7 +7,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 typedef struct dnode {
   struct dnode *prev;
@@ -56,7 +55,7 @@ void dinrear(twolink **list, data stream) {
 }
 
 void drmrear(twolink **list) {
-  twolink * temp = *list;
+  twolink *temp = *list;
   if (isemptydb(*list) == 1) {
     perror("\nTidak ada yang dapat dihapus!");
     return badend();

@@ -31,6 +31,5 @@ void drmrear(twolink **list);
 void drmbetween(twolink **list, int pos);
 
 void travel(twolink *list, char gear, void (*func)(data));
-void dlistcpy(twolink *source, twolink **stream);
 
 #endif
