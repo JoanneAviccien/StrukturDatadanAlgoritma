@@ -1,13 +1,11 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include "linklist.h"
 #include "display.h"
+#include "linklist.h"
+#include <stdbool.h>
 
-int main(){
+int main() {
   struct node *first = NULL;
   struct node *second = NULL;
-  
+
   insertsortnamemhs(&first, "Jajang Nurjaman", 80);
   insertsortnamemhs(&first, "Agus Australia", 90);
   insertsortnamemhs(&first, "Asep Sikasep", 100);
@@ -24,7 +22,7 @@ int main(){
   listcpy(first, &second);
   removedupe(&second);
   sortgrademhs(second);
-  
+
   killlist(&first);
   killlist(&second);
 

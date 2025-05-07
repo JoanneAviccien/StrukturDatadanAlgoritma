@@ -1,0 +1,158 @@
+#ifndef linklist_h
+#define linklist_h
+
+#include "data.h"
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node {
+  buku isi;
+  struct node *chain;
+} linkedlist;
+
+bool isempty(linkedlist *list) {
+  if (list != NULL) {
+    return 0;
+  } else {
+    return 1;
+  }
+}
+
+linkedlist *createnode(buku in) {
+  // Allocation
+  linkedlist *newnode = (linkedlist *)malloc(sizeof(linkedlist));
+  if (isempty(newnode) == 1) {
+    perror("\nAlokasi Memori Gagal </3");
+    exit(1);
+  }
+  // Assignment
+  newnode->isi = in;
+  newnode->chain = NULL;
+  return newnode;
+}
+
+void infront(linkedlist **list, buku in) {
+  linkedlist *newnode = createnode(in);
+  linkedlist *yourlist = *list;
+
+  if (isempty(yourlist) == 1) {
+    *list = newnode;
+    return;
+  }
+
+  newnode->chain = yourlist->chain;
+  yourlist->chain = newnode;
+}
+
+void inrear(linkedlist **list, buku in) {
+  // Assignment
+  linkedlist *newnode = createnode(in);
+  linkedlist *yourlist = *list;
+
+  if (isempty(yourlist) == 1) {
+    *list = newnode;
+    return;
+  }
+
+  while (yourlist->chain != NULL) {
+    yourlist = yourlist->chain;
+  }
+
+  newnode->chain = yourlist->chain;
+  yourlist->chain = newnode;
+}
+
+void inbetween(linkedlist **list, buku in, int pos) {
+  linkedlist *newnode = createnode(in);
+  linkedlist *yourlist = *list;
+
+  if (isempty(yourlist) == 1) {
+    perror("\nList tidak boleh kosong!");
+    exit(1);
+  }
+
+  if (pos == 1) {
+    newnode->chain = *list;
+    return;
+  } else {
+    --pos;
+    while (pos != 1) {
+      yourlist = yourlist->chain;
+      --pos;
+    }
+
+    newnode->chain = yourlist->chain;
+    yourlist->chain = newnode;
+  }
+};
+
+void rmfront(linkedlist **list) {
+
+  if (isempty(*list) == 1) {
+    perror("\nTidak ada yang dapat dihapus!");
+  }
+  printf("Menghapus..");
+  linkedlist *temp = *list;
+  *list = (*list)->chain;
+  free(temp);
+}
+
+void rmrear(linkedlist **list) {
+  linkedlist *prevend = *list;
+  if (isempty(*list) == 1) {
+    perror("\nTidak ada yang dapat dihapus!");
+  }
+
+  if (prevend->chain == NULL) {
+    free(*list);
+    return;
+  }
+
+  while (prevend->chain->chain != NULL) {
+    prevend = prevend->chain;
+  }
+
+  free(prevend->chain);
+  prevend->chain = NULL;
+}
+
+void rmbetween(linkedlist **list, int pos) {
+  linkedlist *prev = NULL;
+  linkedlist *rm = *list;
+
+  if (isempty(rm) == 1) {
+    perror("Tidak ada yang dapat dihapus!");
+  } else if (pos == 1) {
+    *list = rm->chain;
+    free(*list);
+  } else {
+    --pos;
+    while (pos != 1) {
+      prev = rm;
+      rm = rm->chain;
+      --pos;
+    }
+    if (rm != NULL) {
+      prev->chain = rm->chain;
+      free(rm);
+    } else {
+      perror("Node tidak tersedia");
+    }
+  }
+}
+
+void printlist(linkedlist *list, void (*printfunc)(buku)) {
+  if (isempty(list) == 1) {
+    perror("List tidak dapat di print!");
+    return;
+  }
+  linkedlist *print = list;
+
+  while (print != NULL) {
+    printfunc(print->isi);
+    print = print->chain;
+  }
+}
+
+#endif
